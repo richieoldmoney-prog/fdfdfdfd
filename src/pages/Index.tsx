@@ -17,15 +17,26 @@ const Index = () => {
       quiz.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleSuggestion = () => {
+const handleSuggestion = async () => {
     if (suggestion.trim()) {
-      toast.success("Öneriniz alındı! Teşekkürler 🎉");
-      setSuggestion("");
+      try {
+        const { error } = await supabase
+          .from('test_onerileri')
+          .insert([{ film_dizi: suggestion.trim() }])
+        
+        if (error) throw error
+        
+        toast.success("Öneriniz kaydedildi! Teşekkürler 🎉");
+        setSuggestion("");
+      } catch (error) {
+        console.error('Hata:', error)
+        toast.error("Bir hata oluştu, lütfen tekrar deneyin");
+      }
     } else {
       toast.error("Lütfen bir öneri yazın");
     }
   };
-
+  
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-white/10 sticky top-0 bg-white/10 backdrop-blur-lg z-10 shadow-lg">
