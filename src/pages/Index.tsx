@@ -15,7 +15,7 @@ const Index = () => {
     (quiz) =>
       quiz.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       quiz.description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  ); 
 
 const handleSuggestion = async () => {
     if (suggestion.trim()) {
